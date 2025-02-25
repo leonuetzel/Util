@@ -244,7 +244,7 @@ namespace ITN
 				
 				
 				
-				constexpr inline void double_to_8x8Bit(double data, uint8 outBuffer[8])
+				constexpr inline void double_to_8x8Bit(double data, uint8 outBuffer[8], bool msbFirst = true)
 				{
 					union convert
 					{
@@ -255,14 +255,24 @@ namespace ITN
 					convert c = {0};
 					c.d = data;
 					
-					for(uint32 i = 0; i < 8; i++)
+					if(msbFirst == false)
 					{
-						outBuffer[i] = c.u[i];
+						for(uint32 i = 0; i < 8; i++)
+						{
+							outBuffer[i] = c.u[i];
+						}
+					}
+					else
+					{
+						for(uint32 i = 0; i < 8; i++)
+						{
+							outBuffer[i] = c.u[7 - i];
+						}
 					}
 				}
 				
 				
-				constexpr inline double _8x8Bit_to_double(const uint8* lowestByte)
+				constexpr inline double _8x8Bit_to_double(const uint8* lowestByte, bool msbFirst = true)
 				{
 					union convert
 					{
@@ -271,16 +281,27 @@ namespace ITN
 					};
 					
 					convert c = {0};
-					for(uint32 i = 0; i < 8; i++)
+					
+					if(msbFirst == false)
 					{
-						c.u[i] = lowestByte[i];
+						for(uint32 i = 0; i < 8; i++)
+						{
+							c.u[i] = lowestByte[i];
+						}
+					}
+					else
+					{
+						for(uint32 i = 0; i < 8; i++)
+						{
+							c.u[i] = lowestByte[7 - i];
+						}
 					}
 					
 					return(c.d);
 				}
 				
 				
-				inline double _8x8Bit_to_double(const std::vector<uint8>& data, uint32 startIndex = 0)
+				inline double _8x8Bit_to_double(const std::vector<uint8>& data, uint32 startIndex = 0, bool msbFirst = true)
 				{
 					if(data.size() < 8 + startIndex)
 					{
@@ -294,16 +315,27 @@ namespace ITN
 					};
 					
 					convert c = {0};
-					for(uint32 i = 0; i < 8; i++)
+					
+					if(msbFirst == false)
 					{
-						c.u[i] = data.at(i + startIndex);
+						for(uint32 i = 0; i < 8; i++)
+						{
+							c.u[i] = data.at(i + startIndex);
+						}
+					}
+					else
+					{
+						for(uint32 i = 0; i < 8; i++)
+						{
+							c.u[i] = data.at(7 - i + startIndex);
+						}
 					}
 					
 					return(c.d);
 				}
 				
 				
-				constexpr inline void float_to_4x8Bit(float data, uint8 outBuffer[4])
+				constexpr inline void float_to_4x8Bit(float data, uint8 outBuffer[4], bool msbFirst = true)
 				{
 					union convert
 					{
@@ -314,14 +346,24 @@ namespace ITN
 					convert c = {0};
 					c.d = data;
 					
-					for(uint32 i = 0; i < 4; i++)
+					if(msbFirst == false)
 					{
-						outBuffer[i] = c.u[i];
+						for(uint32 i = 0; i < 4; i++)
+						{
+							outBuffer[i] = c.u[i];
+						}
+					}
+					else
+					{
+						for(uint32 i = 0; i < 4; i++)
+						{
+							outBuffer[i] = c.u[3 - i];
+						}
 					}
 				}
 				
 				
-				constexpr inline float _4x8Bit_to_float(const uint8* lowestByte)
+				constexpr inline float _4x8Bit_to_float(const uint8* lowestByte, bool msbFirst = true)
 				{
 					union convert
 					{
@@ -330,16 +372,27 @@ namespace ITN
 					};
 					
 					convert c = {0};
-					for(uint32 i = 0; i < 4; i++)
+					
+					if(msbFirst == false)
 					{
-						c.u[i] = lowestByte[i];
+						for(uint32 i = 0; i < 4; i++)
+						{
+							c.u[i] = lowestByte[i];
+						}
+					}
+					else
+					{
+						for(uint32 i = 0; i < 4; i++)
+						{
+							c.u[i] = lowestByte[3 - i];
+						}
 					}
 					
 					return(c.d);
 				}
 				
 				
-				inline float _4x8Bit_to_float(const std::vector<uint8>& data, uint32 startIndex = 0)
+				inline float _4x8Bit_to_float(const std::vector<uint8>& data, uint32 startIndex = 0, bool msbFirst = true)
 				{
 					if(data.size() < 4 + startIndex)
 					{
@@ -353,9 +406,20 @@ namespace ITN
 					};
 					
 					convert c = {0};
-					for(uint32 i = 0; i < 4; i++)
+					
+					if(msbFirst == false)
 					{
-						c.u[i] = data.at(i + startIndex);
+						for(uint32 i = 0; i < 4; i++)
+						{
+							c.u[i] = data.at(i + startIndex);
+						}
+					}
+					else
+					{
+						for(uint32 i = 0; i < 4; i++)
+						{
+							c.u[i] = data.at(3 - i + startIndex);
+						}
 					}
 					
 					return(c.d);

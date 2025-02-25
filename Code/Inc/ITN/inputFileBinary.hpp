@@ -6,6 +6,7 @@
 #include <fstream>
 #include <filesystem>
 #include <iterator>
+#include <vector>
 
 #include "windows.h"
 
